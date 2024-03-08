@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTS ARMY Lover</title>
+    <style>
+        .header {
+            background-color: black;
+            color: white;
+            height: 5vh;
+        }
+        .SongName{
+            width: 30vw;
+        }
+
+        .mid {
+            height: 75vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bottom {
+            height: 20vh;
+            background-color: black;
+            color: white;
+        }
+
+        .midbox {
+            background: url('https://cdn.pixabay.com/photo/2016/01/27/15/35/heart-1164739_640.jpg');
+
+            background-position: center;
+            width: 70vw;
+            height: 70vh;
+
+        }
+
+        .songsList {
+            color: white;
+            font-size: 20px;
+            background-color: black;
+            width: 20vw;
+        }
+
+        .songsList div {
+            width: 20vw;
+            /* border: 2px solid green; */
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+            gap: 20px;
+        }
+
+        .songsList img {
+            width: 30px;
+        }
+
+        .songsList i {
+            cursor: pointer;
+        }
+
+        .bottom {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bottom input {
+            width: 90vw;
+            margin: 10px;
+        }
+
+        .left img {
+            height: 40px;
+        }
+
+        .left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #head {
+            width: 60vw;
+        }
+        .Allsongs{
+            margin: 10px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .midbox {
+                width: 90vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="left">
+                <img src="https://cdn.pixabay.com/photo/2017/05/17/15/20/kids-2321161_640.png" alt="BTS ARMY LOGO">
+                <span>BTS ARMY -</span>
+                <span>For KAJAL MAM</span>
+            </div>
+            <div class="right"></div>
+        </div>
+        <div class="mid">
+            <div class="midbox">
+                <div class="songsList">
+                    <h3 id="head">BTS SONGS LIST</h3>
+
+                    <div class="Allsongs"><img class="images" src="" alt=""><span class="SongName"></span> <i id="0"
+                            class="fa-regular playit fa-circle-play"></i></div>
+                    <div class="Allsongs"><img class="images" src="" alt=""><span class="SongName"></span><i id="1"
+                            class="fa-regular playit fa-circle-play"></i></div>
+                    <div class="Allsongs"><img class="images" src="" alt=""><span class="SongName"></span><i id="2"
+                            class="fa-regular playit fa-circle-play"></i></div>
+                    <div class="Allsongs"><img class="images" src="" alt=""><span class="SongName"></span><i id="3"
+                            class="fa-regular playit fa-circle-play"></i></div>
+                    <div class="Allsongs"><img class="images" src="" alt=""><span class="SongName"></span><i id="4"
+                            class="fa-regular playit fa-circle-play"></i></div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom">
+
+            <input type="range" id="ProgressBar" name="range">
+            <div class="buttons">
+                <i class="fa-regular fa-circle-left fa-2xl"></i>
+                <i class="fa-regular masterplayit fa-circle-play fa-2xl"></i>
+                <i class="fa-regular fa-circle-right fa-2xl"></i>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/ceab6b700c.js" crossorigin="anonymous"></script>
+    <script>
+        let audioElements = new Audio('7.mp3');
+        let element = document.getElementsByClassName('playit')[0];
+        let progress = document.getElementById('ProgressBar');
+        let songLIst = Array.from(document.getElementsByClassName('Allsongs'));
+        let PlayAllsongs = Array.from(document.getElementsByClassName('playit'));
+        let masterplayit = document.getElementsByClassName('masterplayit')[0];
+
+
+        let songs = [
+            { songName: "Butterfly", filePath: "./songs/5.mp3", coverPath: "./coverPath/butterfly.jpeg" },
+            { songName: "Go Go", filePath: "./songs/6.mp3", coverPath: "./coverPath/gogo.jpeg" },
+            { songName: "Dimple", filePath: "./songs/7.mp3", coverPath: "./coverPath/dimple.jpeg" },
+            { songName: "SilverSpoon", filePath: "./songs/8.mp3", coverPath: "./coverPath/silverspoon.jpeg" },
+            { songName: "Butter", filePath: "./songs/9.mp3", coverPath: "./coverPath/bts.png" },
+        ]
+        masterplayit.addEventListener('click', () => {
+            if (audioElements.currentTime <= 0 || audioElements.paused) {
+
+                audioElements.play()
+
+            }
+            else {
+                audioElements.pause();
+                masterplayit.classList.remove('fa-circle-play');
+                masterplayit.classList.add('fa-circle-pause');
+            }
+
+
+        })
+        audioElements.addEventListener('timeupdate', () => {
+            progressed = parseInt((audioElements.currentTime / audioElements.duration) * 100);
+
+            progress.value = progressed
+        })
+        progress.addEventListener('change', () => {
+            audioElements.currentTime = progress.value * audioElements.duration / 100;
+        })
+        songLIst.forEach((e, i) => {
+            e.getElementsByClassName("images")[0].src = songs[i].coverPath;
+            e.getElementsByClassName("SongName")[0].innerText = songs[i].songName;
+        })
+        const makeAllPlays = () => {
+            Array.from(document.getElementsByClassName('playit')).forEach((e) => {
+                e.classList.remove('fa-circle-pause');
+                e.classList.add('fa-circle-play');
+            })
+        }
+        PlayAllsongs.forEach((e, i) => {
+            e.addEventListener('click', (element) => {
+                makeAllPlays();
+                index = parseInt(element.target.id);
+                element.target.classList.remove('fa-circle-play')
+                element.target.classList.add('fa-circle-pause')
+                // audioElements.src = `songs/${index}.mp3`
+                audioElements.src = songs[index].filePath
+                audioElements.currentTime = 0;
+                audioElements.play();
+                masterplayit.classList.remove('fa-circle-play')
+                masterplayit.classList.add('fa-circle-play')
+
+            })
+        })
+    </script>
+</body>
+
+</html>
